@@ -33,9 +33,9 @@ Para executar os scripts python, basta abrir o terminal na pasta do projeto e ex
 
 ## Construção 
 ### Consultando a API
-O primeiro passo para iniciar o pipeline de dados foi consultar e analisar a documentação oficial da "CoinCap API 2.0" para compreender sua utilização de forma adequada.
+O primeiro passo para iniciar o pipeline de dados foi consultar e analisar a <a href="https://docs.coincap.io/#ee30bea9-bb6b-469d-958a-d3e35d442d7a" target="_blank">documentação oficial da CoinCap API 2.0</a> para compreender sua utilização de forma adequada.
 
-Após essa análise, decidi coletar dados históricos de diversas criptomoedas disponíveis, utilizando o método "Assets". Esse método forneceu dados valiosos com grande potencial para a geração de insights e o cálculo de novas métricas.
+Após essa análise, decidi coletar dados históricos de diversas criptomoedas disponíveis, utilizando o método "Assets", além de utilizar o método "Exchange" para coletar dados de todas as plataformas de trocas de criptomoedas disponíveis via API. Esses métodos forneceram dados valiosos com grande potencial para a geração de insights e o cálculo de novas métricas.
 
 Além disso, foi necessário criar uma chave de API para permitir a realização das requisições via script Python. A documentação forneceu um guia simples e prático para esse processo.
 
@@ -50,7 +50,7 @@ Os scripts foram divididos em duas partes, cada uma com um objetivo específico:
 
 
 ### Google Big Query 
-Para simular a manipulação de grandes volumes de dados, optei por utilizar o Google BigQuery como banco de dados/data warehouse para armazenar os dados extraídos da API. A organização dos dados segue a arquitetura em camadas (medalhão), estruturando o data warehouse em três níveis:
+Para simular a manipulação de grandes volumes de dados, optei por utilizar o Google BigQuery como banco de dados/data warehouse para armazenar os dados extraídos da API. A organização dos dados segue a arquitetura em camadas (medalhão), estruturando o data warehouse em três níveis(datasets):
 
 - Camada Bronze: Armazena os dados brutos, exatamente como são extraídos da API, sem qualquer tipo de transformação.
 
@@ -58,13 +58,19 @@ Para simular a manipulação de grandes volumes de dados, optei por utilizar o G
 
 - Camada Gold: Armazena os dados enriquecidos com regras de negócio aplicadas, agregando informações e gerando novos insights.
 
-### Imagens
-![Table final camada gold](images/table_gold.png)
+#### Datasets/Camadas e Tabelas
+![Table Assets History Gold](images/table_assets_history_gold.png)
+![Table Exchange Platforms Gold](images/table_exchange_platforms_gold.png)
 
 ### Looker Studio 
-Como produto final do pipeline de dados, foi desenvolvido um dashboard interativo no Google Looker Studio, permitindo uma análise visual dos dados coletados e facilitando a geração de insights sobre o mercado de criptomoedas.
+Como produto final do pipeline de dados, foram desenvolvido dashboards interativos no Google Looker Studio para cada tabela final, permitindo uma análise visual dos dados coletados e facilitando a geração de insights sobre o mercado de criptomoedas.
 
-O dashboard apresenta diferentes componentes visuais para interpretar as métricas extraídas:
+Os dashboards apresentam diferentes componentes visuais para interpretar as métricas extraídas:
+
+#### Dashboard com dados da tabela "assets_history" camada gold
+![Dashboard Looker Studio](images/dashboard_looker_studio.png)
+![Dashboard Looker Studio](images/dashboard_looker_studio_filter.png)
+
 
 - Tabela de valores máximos e mínimos: Exibe os preços mais altos e mais baixos alcançados por cada criptomoeda no período selecionado, permitindo uma análise da volatilidade dos ativos.
 
@@ -74,6 +80,13 @@ O dashboard apresenta diferentes componentes visuais para interpretar as métric
 
 Esses elementos permitem uma compreensão mais clara do comportamento do mercado, auxiliando na identificação de padrões, na comparação entre diferentes criptomoedas e na tomada de decisões baseadas em dados.
 
-#### Imagens 
-![Dashboard Looker Studio](images/dashboard_looker_studio.png)
-![Dashboard Looker Studio](images/dashboard_looker_studio_filter.png)
+
+#### Dashboard com dados da tabela "exchange_platforms" camada gold
+
+- Tabela Ranking das Plataformas de Troca de Criptomoedas: Mostra as principais exchanges ordenadas por relevância. Sendo assim, importante para identificar quais plataformas dominam o mercado e possuem maior liquidez.
+
+- Gráfico de Pizza: Exibe a participação de cada exchange no volume total de transações. Essencial para entender a concentração de mercado e a competitividade entre as plataformas.
+
+- Gráfico de Barras: Demonstra o volume diário de transações das exchanges em dólares. De modo a indica quais plataformas movimentam mais dinheiro, auxiliando na análise de liquidez e estabilidade do mercado.
+
+![Dashboard Looker Studio](images/dashboar_looker_studio_exchange_platforms.png)

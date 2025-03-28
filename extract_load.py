@@ -86,9 +86,47 @@ def get_asset_history():
 
     return final_df
 
+# Função para extração de dados dos mercados de criptomoedas 
+def get_exchange_platform():
 
-if __name__ == "__main__":#
+    url_base = "https://api.coincap.io/v2/exchanges"         #"https://api.coincap.io/v2/assets"    #https://api.coincap.io/v2/rates  
+
+    headers = {
+        "Authorization": f"Bearer {API_KEY}"
+    }
+
+    params = {
+        # Não é necessário paassar parâmetros para este endpoint
+    }
+
+    try:
+        fetch_data = requests.get(url=url_base, headers=headers, params=params)
+        print(f"Conection status: {fetch_data.status_code}")
+
+    except Exception as e:
+        print(f"Error = {e}")
+
+    raw_data = fetch_data.json()
+
+    print(raw_data)
+
+    data = raw_data.get("data", {})
+
+    df_final = pd.json_normalize(data)
+
+    df_final["extracted_at"] = current_utc_datetime
+
+    print("Final Data Frame")
+    
+    print(df_final)
+
+    # Enviando dados ao Google Big Query
+    to_big_query(df=df_final, credentials=GCP_CREDENTIALS, table_name='exchange_platforms')
+
+
+if __name__ == "__main__":
     get_asset_history()
+    get_exchange_platform()
 
 
 
