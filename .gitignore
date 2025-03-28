@@ -1,0 +1,5 @@
+.venv
+results
+.env
+get_assets.py
+gcp_credentials.json
