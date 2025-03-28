@@ -83,10 +83,10 @@ Esses elementos permitem uma compreensão mais clara do comportamento do mercado
 
 #### Dashboard com dados da tabela "exchange_platforms" camada gold
 
+![Dashboard Looker Studio](images/dashboar_looker_studio_exchange_platforms.png)
+
 - Tabela Ranking das Plataformas de Troca de Criptomoedas: Mostra as principais exchanges ordenadas por relevância. Sendo assim, importante para identificar quais plataformas dominam o mercado e possuem maior liquidez.
 
 - Gráfico de Pizza: Exibe a participação de cada exchange no volume total de transações. Essencial para entender a concentração de mercado e a competitividade entre as plataformas.
 
 - Gráfico de Barras: Demonstra o volume diário de transações das exchanges em dólares. De modo a indica quais plataformas movimentam mais dinheiro, auxiliando na análise de liquidez e estabilidade do mercado.
-
-![Dashboard Looker Studio](images/dashboar_looker_studio_exchange_platforms.png)
