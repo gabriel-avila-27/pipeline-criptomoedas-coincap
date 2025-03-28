@@ -4,7 +4,7 @@ Este projeto tem como objetivo a construção de um pipeline de dados para colet
 
 ## Tecnologias e ferramentas utilizadas
 - Python 3.13.1
-- Big Query(Google Cloud Platform)
+- BigQuery(Google Cloud Platform)
 - Linguagem SQL
 - Looker Studio
 - API "CoinCap API 2.0" 
@@ -49,7 +49,7 @@ Os scripts foram divididos em duas partes, cada uma com um objetivo específico:
 - Outro script para executar consultas SQL de transformação de dados, através de uma conexão com o Google BigQuery.
 
 
-### Google Big Query 
+### Google BigQuery 
 Para simular a manipulação de grandes volumes de dados, optei por utilizar o Google BigQuery como banco de dados/data warehouse para armazenar os dados extraídos da API. A organização dos dados segue a arquitetura em camadas (medalhão), estruturando o data warehouse em três níveis(datasets):
 
 - Camada Bronze: Armazena os dados brutos, exatamente como são extraídos da API, sem qualquer tipo de transformação.
@@ -57,6 +57,17 @@ Para simular a manipulação de grandes volumes de dados, optei por utilizar o G
 - Camada Silver: Contém os dados já limpos, transformados e padronizados a partir da camada Bronze.
 
 - Camada Gold: Armazena os dados enriquecidos com regras de negócio aplicadas, agregando informações e gerando novos insights.
+
+#### Regras de Negócio Aplicadas na Camada Gold 
+Tabela assets_history
+- price_change_last_24_hrs: Calcula a variação absoluta do preço de uma determinada criptomoeda em relação ao dia anterior.
+
+- price_change_percentage_last_24_hrs: Representa a variação percentual do preço da determinada criptomoeda em comparação ao dia anterior.
+
+- symbol: Adiciona os símbolos de cada criptomoeda presente na tabela.
+
+Tabela exchange_platforms
+- updated_datetime_brt: Converte os valores da coluna update, que estão em formato UNIX timestamp (milissegundos), para um formato legível, representando o momento em que a informação foi recebida da exchange.
 
 #### Datasets/Camadas e Tabelas
 ![Table Assets History Gold](images/table_assets_history_gold.png)
